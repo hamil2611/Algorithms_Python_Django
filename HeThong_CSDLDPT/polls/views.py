@@ -130,7 +130,7 @@ def DoTuongDong(str_search):
                 if dic_str_search[k][0] == s_split2[0]:
                     TQ+= float(s_split2[1])
                     T+=1
-            mau = math.sqrt(T*Q)
+        mau = math.sqrt(T*Q)
         if mau==0:
             S=0
         else:
@@ -180,18 +180,17 @@ def CalculaWeight(arr,tentudien):
 #Tien xu ly
 def preProcessing(str):
     str=str.lower()
-    str_process1 = str.lstrip()
-    str_process2 = str_process1.rstrip()
-    str_process2 = str_process2.replace(",","")
+    str = str.replace(",","")
+    str = " " + str + " "
     f = open("D:/HeThong_CSDLDPT/HeThong_CSDLDPT/File/stopword/stopword.txt",'r')
     stopword = f.read()
     stopword_split = stopword.split(",")
     #print(stopword_split)
-    del_stopword=""
     for i in range(len(stopword_split)):
-        del_stopword = str_process2.replace(stopword_split[i]," ")
-        str_process2 = del_stopword
-    str_result = re.sub(r'\s+',' ', del_stopword.strip())
+        str = str.replace(stopword_split[i]," ")
+    str_result = re.sub(r'\s+',' ', str.strip())
+    str_result = str_result.lstrip()
+    str_result = str_result.rstrip()
     #print(str_result)
     return str_result
 

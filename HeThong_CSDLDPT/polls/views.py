@@ -111,9 +111,21 @@ def createidf():
     return 1
 
 def DoTuongDong(str_search):
-    dic_str_search = countTerm(str_search)
+    dic_str_search = countTerm(str_search) 
     rank = []
     doc = Document.objects.latest('datecreate')
+    T=0
+    f = open("D:/HeThong_CSDLDPT/HeThong_CSDLDPT/File/dictionary/idf_Dictionary.txt",'r',encoding = 'utf-8')
+    str_idf = f.read()
+    str_idf_split = str_idf.split(";")
+    dic_str_search.sort()
+    
+    for k in range(len(dic_str_search)):
+        for l in range(len(str_idf_split)-1):
+            str_idf_split2 = str_idf_split[l].split(",")
+            if str_idf_split2[0]==dic_str_search[k][0]:
+                T+=1
+                break
     for i in range(doc.doc_id):
         url ="D:/HeThong_CSDLDPT/HeThong_CSDLDPT/File/trongso/trongso" + str(i+1)  +".txt"
         f = open(url,'r',encoding = 'utf-8')
@@ -121,7 +133,6 @@ def DoTuongDong(str_search):
         s_split = s.split(";")
         S=0
         TQ=0
-        T=0
         Q=0
         for j in range(len(s_split)-1):
             s_split2=s_split[j].split(",")   
@@ -129,7 +140,6 @@ def DoTuongDong(str_search):
             for k in range(len(dic_str_search)):
                 if dic_str_search[k][0] == s_split2[0]:
                     TQ+= float(s_split2[1])
-                    T+=1
         mau = math.sqrt(T*Q)
         if mau==0:
             S=0
@@ -181,7 +191,7 @@ def CalculaWeight(arr,tentudien):
 def preProcessing(str):
     str=str.lower()
     str = str.replace(",","")
-    str = " " + str + " "
+    str = " " + str + " "  
     f = open("D:/HeThong_CSDLDPT/HeThong_CSDLDPT/File/stopword/stopword.txt",'r')
     stopword = f.read()
     stopword_split = stopword.split(",")
